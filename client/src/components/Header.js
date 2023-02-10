@@ -10,7 +10,7 @@ const Header = () => {
                 <h1>EduCast</h1>
             
             <div className='avtar'>
-            <Avatar style={{background:"#3bba9c"}}>H</Avatar>
+            <Avatar style={{background:"#3bba9c"}}>E</Avatar>
             </div>
             </nav>
         </header>
