@@ -2,17 +2,21 @@ section{
     width: 100%;
     padding: 10px;
     min-height:calc(100vh - 80px);
+
+
+    
 }
 
 section .form_data{
     max-width: 550px;
     margin: 25px auto;
     padding: 35px 10px;
-    box-shadow: 0 0 15px -10px #2d3748;
+    box-shadow: 0 0 15px -10px #2c2e30;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 
 .form_heading{
