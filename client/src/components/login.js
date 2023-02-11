@@ -47,7 +47,7 @@ const Login = () => {
         position: "top-center",
       });
     } else {
-      // console.log("user login succesfully done");
+       console.log("user login succesfully done");
 
       const data = await fetch("/login", {
         method: "POST",
