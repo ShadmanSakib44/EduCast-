@@ -81,7 +81,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     res.status(401).json(error);
-    console.log("catch block");
+    console.log(error);
   }
 });
 
