@@ -157,14 +157,9 @@ const Login = ({ isUserAuthenticated }) => {
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
-                            {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
-
-                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' label="Name"/>
-
-                            <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
-                            {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
-                            <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
-
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='email' label='Enter Email' />
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
 
                             <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
                             <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
