@@ -18,7 +18,7 @@ const Wrapper = styled(Box)`
 `;
 
 const Text = styled(Typography)`
-    color: #878787;
+    color: #ffffff;
 `;
 
 
@@ -27,16 +27,16 @@ const Contact = () => {
         <Box>
             <Banner />
             <Wrapper>
-                <Typography variant="h3">Getting in touch is easy!</Typography>    
+                <Typography variant="h3" color={"#ffffff"}>Getting in touch is easy!</Typography>    
                 <Text variant="h5">
-                    Reach out to me on
-                    <Link href="https://www.instagram.com/codeforinterview/" color="inherit" target="_blank">
+                    Reach out to us on
+                    <Link href="https://www.instagram.com/codeforinterview/" color="#ffffff" target="_blank">
                         <Instagram/>
                     </Link>
-                    or send me an Email 
-                    <Link href="mailto:codeforinterview@gmail.com?Subject=This is a subject" target="_blank" color="inherit">
+                    or send us Email 
+                    <Link href="mailto:codeforinterview@gmail.com?Subject=This is a subject" target="_blank" color="#ffffff">
                         <Email />
-                    </Link>.
+                    </Link>. Or contact us at- 0123456678
                 </Text>
             </Wrapper>
         </Box>

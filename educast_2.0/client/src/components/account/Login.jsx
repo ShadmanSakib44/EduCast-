@@ -5,18 +5,32 @@ import { useNavigate } from 'react-router-dom';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
+import { color } from '@mui/system';
+import eImage from '../image/ET.png';
+
+
+
+
+
+
 
 const Component = styled(Box)`
-    width: 400px;
-    margin: auto;
-    box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+width: 600px;
+margin: auto;
+box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+background-size: cover;
+background-position: center;
+background-color: #abd4b5
+
+    
 `;
 
 const Image = styled('img')({
     width: 100,
     display: 'flex',
     margin: 'auto',
-    padding: '50px 0 0'
+    padding: '50px 0 0',
+    
 });
 
 const Wrapper = styled(Box)`
@@ -32,7 +46,7 @@ const Wrapper = styled(Box)`
 
 const LoginButton = styled(Button)`
     text-transform: none;
-    background: #FB641B;
+    background: #348c26;
     color: #fff;
     height: 48px;
     border-radius: 2px;
@@ -41,7 +55,7 @@ const LoginButton = styled(Button)`
 const SignupButton = styled(Button)`
     text-transform: none;
     background: #fff;
-    color: #2874f0;
+    color: black;
     height: 48px;
     border-radius: 2px;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
@@ -80,7 +94,7 @@ const Login = ({ isUserAuthenticated }) => {
     const navigate = useNavigate();
     const { setAccount } = useContext(DataContext);
 
-    const imageURL = 'https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
+    const imageURL = eImage;
 
     useEffect(() => {
         showError(false);
@@ -129,26 +143,31 @@ const Login = ({ isUserAuthenticated }) => {
     return (
         <Component>
             <Box>
-                <Image src={imageURL} alt="blog" />
+                <Image src={imageURL} alt="Educast" style={{ width: '200px', height: '180px'}} />
                 {
                     account === 'login' ?
                         <Wrapper>
-                            <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
-                            <TextField variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
+                            <TextField helperText="Please enter your username" id="demo-helper-text-misaligned"  value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
+                            <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
 
                             {error && <Error>{error}</Error>}
 
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
-                            <Text style={{ textAlign: 'center' }}>OR</Text>
+                            <Text style={{ textAlign: 'center', color:'black' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+                            {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
+
+                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' label="Name"/>
+
+                            <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
+                            {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
+                            <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+
 
                             <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
-                            <Text style={{ textAlign: 'center' }}>OR</Text>
+                            <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
                             <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
                         </Wrapper>
                 }
