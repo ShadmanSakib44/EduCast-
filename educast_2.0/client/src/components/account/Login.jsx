@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link,useNavigate } from 'react-router-dom';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 import { color } from '@mui/system';
 import eImage from '../image/ET.png';
+import gImage from '../image/google.png';
 
-
-
-
-
-
+import {useGoogleLogin} from '@react-oauth/google';
+import {useDispatch} from 'react-redux';
+import {signupGoogle} from "../../redux/actions/auth";
 
 const Component = styled(Box)`
 width: 600px;
@@ -52,7 +53,24 @@ const LoginButton = styled(Button)`
     border-radius: 2px;
 `;
 
+const GoogleLoginButton = styled(Button)`
+    text-transform: none;
+    background: #797389;
+    color: white;
+    height: 48px;
+    border-radius: 2px;
+`;
+
 const SignupButton = styled(Button)`
+    text-transform: none;
+    background: #fff;
+    color: black;
+    height: 48px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+`;
+
+const GoogleSignupButton = styled(Button)`
     text-transform: none;
     background: #fff;
     color: black;
@@ -85,7 +103,9 @@ const signupInitialValues = {
     password: '',
 };
 
-const Login = ({ isUserAuthenticated }) => {
+
+
+const Login = ({ isUserAuthenticated }) => {    
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
     const [error, showError] = useState('');
@@ -95,6 +115,7 @@ const Login = ({ isUserAuthenticated }) => {
     const { setAccount } = useContext(DataContext);
 
     const imageURL = eImage;
+    const gimageURL = gImage;
 
     useEffect(() => {
         showError(false);
@@ -140,6 +161,25 @@ const Login = ({ isUserAuthenticated }) => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
     }
 
+    // const dispatch = useDispatch();
+
+    // function handleGoogleLoginSuccess(tokenResponse) {
+
+    //     const accessToken = tokenResponse.access_token;
+
+    //     dispatch(signinGoogle(accessToken,navigate))
+    // }
+    // const googleLogin = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
+
+    // function handleGoogleSignUpSuccess(tokenResponse) {
+
+    //     const accessToken = tokenResponse.access_token;
+
+    //     dispatch(signupGoogle(accessToken,navigate))
+    // }
+
+    // const googleSignUp = useGoogleSignUp({onSuccess: handleGoogleSignUpSuccess});
+
     return (
         <Component>
             <Box>
@@ -153,20 +193,22 @@ const Login = ({ isUserAuthenticated }) => {
                             {error && <Error>{error}</Error>}
 
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
+                            <GoogleSignupButton><img src={gimageURL}></img>Sign In with Google</GoogleSignupButton>
                             <Text style={{ textAlign: 'center', color:'black' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
                             {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
 
-                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' label="Name"/>
+                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' label="Enter Name"/>
 
-                            <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
+                            <TextField helperText="Please enter your email" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username' label='Enter Email' />
                             {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
                             <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
 
 
                             <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
+                            <GoogleSignupButton><img src={gimageURL}></img>Sign Up with Google</GoogleSignupButton>
                             <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
                             <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
                         </Wrapper>
@@ -177,3 +219,5 @@ const Login = ({ isUserAuthenticated }) => {
 }
 
 export default Login;
+
+// onClick={() => googleSignUp()}
