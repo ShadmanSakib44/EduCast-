@@ -1,38 +1,64 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import PasswordStrengthBar from 'react-password-strength-bar';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Link,useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 import { color } from '@mui/system';
 import eImage from '../image/ET.png';
-import gImage from '../image/google.png';
+import zxcvbn from 'zxcvbn';
+import './index1.css';
 
-import {useGoogleLogin} from '@react-oauth/google';
-import {useDispatch} from 'react-redux';
-import {signupGoogle} from "../../redux/actions/auth";
+
+
+
+
+
+
+
 
 const Component = styled(Box)`
-width: 600px;
-margin: auto;
-box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-background-size: cover;
-background-position: center;
-background-color: #abd4b5
-
-    
+width: 1080px;
+ height: 720px;
+  margin: auto;
+  box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+  background-size: cover;
+  background-position: center;
+  background-color: #abd4b5;
+  
+  margin-right: 80px; /* adjust this value to your liking */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  position: relative;
+  
 `;
+// const Component = styled(Box)`
+//   width: 768px;
+//   height: 480px;
+//   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+//   background-size: cover;
+//   background-position: center;
+//   background: linear-gradient(to right, #348c26 50%, transparent 50%);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin: auto;
+//   position: relative;
+// `;
+
 
 const Image = styled('img')({
     width: 100,
     display: 'flex',
     margin: 'auto',
     padding: '50px 0 0',
-    
-});
+    filter: 'brightness(30%)' /* adjust this value to make the image darker or lighter */
+  });
+  
 
 const Wrapper = styled(Box)`
     padding: 25px 35px;
@@ -46,38 +72,24 @@ const Wrapper = styled(Box)`
 `;
 
 const LoginButton = styled(Button)`
-    text-transform: none;
-    background: #348c26;
-    color: #fff;
-    height: 48px;
-    border-radius: 2px;
-`;
-
-const GoogleLoginButton = styled(Button)`
-    text-transform: none;
-    background: #797389;
-    color: white;
-    height: 48px;
-    border-radius: 2px;
+  text-transform: none;
+  background: #348c26;
+  color: #fff;
+  height: 48px;
+  border-radius: 24px; /* set the border-radius to half of the height */
+  
 `;
 
 const SignupButton = styled(Button)`
-    text-transform: none;
-    background: #fff;
-    color: black;
-    height: 48px;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  text-transform: none;
+  background: #fff;
+  color: black;
+  height: 48px;
+  border-radius: 24px; /* set the border-radius to half of the height */
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+ 
 `;
 
-const GoogleSignupButton = styled(Button)`
-    text-transform: none;
-    background: #fff;
-    color: black;
-    height: 48px;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-`;
 
 const Text = styled(Typography)`
     color: #878787;
@@ -103,9 +115,7 @@ const signupInitialValues = {
     password: '',
 };
 
-
-
-const Login = ({ isUserAuthenticated }) => {    
+const Login = ({ isUserAuthenticated }) => {
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
     const [error, showError] = useState('');
@@ -115,7 +125,6 @@ const Login = ({ isUserAuthenticated }) => {
     const { setAccount } = useContext(DataContext);
 
     const imageURL = eImage;
-    const gimageURL = gImage;
 
     useEffect(() => {
         showError(false);
@@ -160,28 +169,11 @@ const Login = ({ isUserAuthenticated }) => {
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
     }
-
-    // const dispatch = useDispatch();
-
-    // function handleGoogleLoginSuccess(tokenResponse) {
-
-    //     const accessToken = tokenResponse.access_token;
-
-    //     dispatch(signinGoogle(accessToken,navigate))
-    // }
-    // const googleLogin = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
-
-    // function handleGoogleSignUpSuccess(tokenResponse) {
-
-    //     const accessToken = tokenResponse.access_token;
-
-    //     dispatch(signupGoogle(accessToken,navigate))
-    // }
-
-    // const googleSignUp = useGoogleSignUp({onSuccess: handleGoogleSignUpSuccess});
+  
 
     return (
         <Component>
+            
             <Box>
                 <Image src={imageURL} alt="Educast" style={{ width: '200px', height: '180px'}} />
                 {
@@ -193,25 +185,82 @@ const Login = ({ isUserAuthenticated }) => {
                             {error && <Error>{error}</Error>}
 
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
-                            <GoogleSignupButton><img src={gimageURL}></img>Sign In with Google</GoogleSignupButton>
                             <Text style={{ textAlign: 'center', color:'black' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
+                        
+                      
+
+                        
+                    
+
+                        // <Wrapper>
+                        //     {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
+
+                        //     <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
+
+                        //     <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username'  />
+                        //     {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
+                        //     { <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password'  /> }
+                            
+      
+                        //     <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
+                        //     <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
+                        //     <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
+                        // </Wrapper>
                         <Wrapper>
-                            {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
+    <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
 
-                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' label="Enter Name"/>
+    <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='username' />
 
-                            <TextField helperText="Please enter your email" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username' label='Enter Email' />
-                            {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
-                            <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+    <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password" onChange={(e) => onInputChange(e)} name='password' />
+                    
+    {/* {signup.password && (
+        <PasswordStrengthBar
+            password={signup.password}
+            minLength={6}
+            shortScoreWord="Short"
+            scoreWords={['Weak', 'Fair', 'Good', 'Strong', 'Secure']}
+            thickness={300}
+        />
+    )} */}
+   {signup.password && (
+    <PasswordStrengthBar
+        password={signup.password}
+        minLength={6}
+        shortScoreWord="Short"
+        scoreWords={['Weak', 'Fair', 'Good', 'Strong', 'Secure']}
+        style={{
+            height: '10px', // change the height of the progress bar
+            borderRadius: '0', // remove rounded corners from the progress bar
+            backgroundColor: '#eee', // set background color for the progress bar
+            marginTop: '10px', // add margin to the top of the progress bar
+            border: 'none', // remove the border from the progress bar
+        }}
+        barColors={[
+            '#dc3545', // change color for score 0
+            '#ffc107', // change color for score 1
+            '#17a2b8', // change color for score 2
+            '#28a745', // change color for score 3
+            '#20c997', // change color for score 4
+        ]}
+        barWidth={80} // change the thickness of the colors
+    />
+)}
 
 
-                            <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
-                            <GoogleSignupButton><img src={gimageURL}></img>Sign Up with Google</GoogleSignupButton>
+
+
+    {error && <Error>{error}</Error>}
+    <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
                             <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
                             <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
-                        </Wrapper>
+
+    {/* <SignupButton onClick={() => signupUser()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
+    <Text>Already have an account? <Link to='/' style={{ color: '#348c26' }}>Login</Link></Text> */}
+</Wrapper>
+
+
                 }
             </Box>
         </Component>
@@ -219,5 +268,3 @@ const Login = ({ isUserAuthenticated }) => {
 }
 
 export default Login;
-
-// onClick={() => googleSignUp()}

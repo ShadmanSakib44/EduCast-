@@ -1,5 +1,6 @@
 
 import { styled, Box, Typography } from '@mui/material';
+import ReadingGlassesImage from './Blogging-rafiki.svg';
 
 const Container = styled(Box)`
     border: 1px solid #d3cede;
@@ -9,22 +10,22 @@ const Container = styled(Box)`
     align-items: center;
     flex-direction: column;
     height: 350px;
+    background-color: #58ab4b; /* Add this line */
     & > img, & > p {
         padding: 0 5px 5px 5px;
     }
-    background:#6ac95b;
 `;
 
 const Image = styled('img')({
-    width: '100%',
+    width: '60%',
     objectFit: 'cover',
     borderRadius: '10px 10px 0 0',
     height: 150
 });
 
 const Text = styled(Typography)`
-    color: #ffffff;
-    font-size: 15px;
+    color: #878787
+    font-size: 12px;
 `;
 
 const Heading = styled(Typography)`
@@ -38,7 +39,7 @@ const Details = styled(Typography)`
 `;
 
 const Post = ({ post }) => {
-    const url = post.picture ? post.picture : 'https://www.franchiseindia.com/uploads/content/edu/art/education-858cc07046.jpg';
+    const url = post.picture ? post.picture :  ReadingGlassesImage;
     
     const addEllipsis = (str, limit) => {
         return str.length > limit ? str.substring(0, limit) + '...' : str;
