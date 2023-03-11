@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import PasswordStrengthBar from 'react-password-strength-bar';
-import { TextField, Box, Button, Typography, styled,Alert } from '@mui/material';
+import { TextField, Box, Button, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { API } from '../../service/api';
@@ -10,10 +10,6 @@ import { color } from '@mui/system';
 import eImage from '../image/ET.png';
 import zxcvbn from 'zxcvbn';
 import './index1.css';
-import designimage from '../image/d.png';
-//import { toast } from 'react-toastify';//
-//import 'react-toastify/dist/ReactToastify.css';//
-import { Snackbar } from '@mui/material';//extra
 
 
 
@@ -22,34 +18,38 @@ import { Snackbar } from '@mui/material';//extra
 
 
 
-
-
-
-
-
-
-const designURL = designimage;
 
 const Component = styled(Box)`
-  width: 900px;
-  height: 740px;
+width: 1080px;
+ height: 720px;
   margin: auto;
   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
   background-size: cover;
   background-position: center;
   background-color: #abd4b5;
+  
   margin-right: 80px; /* adjust this value to your liking */
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: url(${designURL});
+  position: relative;
+  
 `;
+// const Component = styled(Box)`
+//   width: 768px;
+//   height: 480px;
+//   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+//   background-size: cover;
+//   background-position: center;
+//   background: linear-gradient(to right, #348c26 50%, transparent 50%);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin: auto;
+//   position: relative;
+// `;
+
 
 
 
@@ -95,7 +95,7 @@ const Image = styled('img')({
     display: 'flex',
     margin: 'auto',
     padding: '50px 0 0',
-    filter: 'brightness(100%)' /* adjust this value to make the image darker or lighter */
+    filter: 'brightness(30%)' /* adjust this value to make the image darker or lighter */
   });
   
 
