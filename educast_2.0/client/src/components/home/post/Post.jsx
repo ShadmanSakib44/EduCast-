@@ -1,5 +1,6 @@
 
 import { styled, Box, Typography } from '@mui/material';
+import ReadingGlassesImage from './Blogging-rafiki.svg';
 
 const Container = styled(Box)`
     border: 1px solid #d3cede;
@@ -9,13 +10,15 @@ const Container = styled(Box)`
     align-items: center;
     flex-direction: column;
     height: 350px;
+    // background-color: #58ab4b; /* Add this line */
+    background: linear-gradient(180deg, #207531, #8ce6a1);
     & > img, & > p {
         padding: 0 5px 5px 5px;
     }
 `;
 
 const Image = styled('img')({
-    width: '100%',
+    width: '60%',
     objectFit: 'cover',
     borderRadius: '10px 10px 0 0',
     height: 150
@@ -37,7 +40,7 @@ const Details = styled(Typography)`
 `;
 
 const Post = ({ post }) => {
-    const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80';
+    const url = post.picture ? post.picture :  ReadingGlassesImage;
     
     const addEllipsis = (str, limit) => {
         return str.length > limit ? str.substring(0, limit) + '...' : str;

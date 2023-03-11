@@ -6,14 +6,15 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Component = styled(AppBar)`
-    background: #FFFFFF;
+    // background: #58ab4b;
+    background: linear-gradient(180deg, #207531, #40cf61);
     color: black;
 `;
 
 const Container = styled(Toolbar)`
     justify-content: center;
     & > a {
-        padding: 20px;
+        padding: 25px;
         color: #000;
         text-decoration: none;
     }
@@ -28,7 +29,8 @@ const Header = () => {
     return (
         <Component>
             <Container>
-                <Link to='/'>HOME</Link>
+            <Link to='/'>HOME</Link>
+
                 <Link to='/about'>ABOUT</Link>
                 <Link to='/contact'>CONTACT</Link>
                 <Link to='/account'>LOGOUT</Link>

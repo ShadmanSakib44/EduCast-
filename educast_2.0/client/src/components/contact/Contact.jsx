@@ -1,46 +1,40 @@
+import React from 'react';
 
-import { Box, styled, Typography, Link } from '@mui/material';
-import { GitHub, Instagram, Email } from '@mui/icons-material';
+function Contact() {
+    const contactStyle = {
+        border: '1px solid #ccc',
+        padding: '20px',
+        backgroundColor: '#f7f7f7',
+        position: 'absolute',
+        bottom: '0',
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      };
+      
 
-const Banner = styled(Box)`
-    background-image: url(http://mrtaba.ir/image/bg2.jpg);
-    width: 100%;
-    height: 50vh;
-    background-position: left 0px top -100px;
-    background-size: cover;
-`;
+  const imageStyle = {
+    width: '500px',
+    height: 'auto',
+    marginRight: '50px',
+  };
 
-const Wrapper = styled(Box)`
-    padding: 20px;
-    & > h3, & > h5 {
-        margin-top: 50px;
-    }
-`;
-
-const Text = styled(Typography)`
-    color: #878787;
-`;
-
-
-const Contact = () => {
-    return (
-        <Box>
-            <Banner />
-            <Wrapper>
-                <Typography variant="h3">Getting in touch is easy!</Typography>    
-                <Text variant="h5">
-                    Reach out to me on
-                    <Link href="https://www.instagram.com/codeforinterview/" color="inherit" target="_blank">
-                        <Instagram/>
-                    </Link>
-                    or send me an Email 
-                    <Link href="mailto:codeforinterview@gmail.com?Subject=This is a subject" target="_blank" color="inherit">
-                        <Email />
-                    </Link>.
-                </Text>
-            </Wrapper>
-        </Box>
-    );
+  return (
+    <div>
+      <h2></h2>
+      <div style={contactStyle}>
+        {<img /*src={require('/Users/shadmansakib/Downloads/MERN-Stack-Projects-master/Blog-Website/client/src/components/contact/Contact us-amico.svg').default}*/ alt="Contact" style={imageStyle} /> }
+        <div>
+          <h3>Contact Information</h3>
+          <p>Phone Number: 01608637421</p>
+          <p>Email: shadmansakib20@iut-dhaka.edu</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Contact;
