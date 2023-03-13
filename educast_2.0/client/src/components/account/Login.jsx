@@ -273,10 +273,26 @@ const Login = ({ isUserAuthenticated }) => {
                         <Wrapper>
     <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
 
-    <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='username' />
-
+    <TextField helperText="Please enter your email" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='username' />
+                    {signup.username && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(signup.username) && (
+                        <Error>Please input valid email</Error>
+                    )}
     <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password" onChange={(e) => onInputChange(e)} name='password' />
-                    
+                    {/* {signup.password && signup.password == "" && (
+                        <Error>Password is required</Error>
+                    )}
+                    {signup.password && signup.password.length < 8 && (
+                        <Error>Password must be 8 characters long</Error>
+                    )}
+                    {signup.password && !/\d/.test(signup.password) && (
+                        <Error>Password must have numeric digits</Error>
+                    )}
+                    {signup.password && !/[A-Z]/.test(signup.password) && (
+                        <Error>Password must have uppercase letters</Error>
+                    )}
+                    {signup.password && !/[a-z]/.test(signup.password) && (
+                        <Error>Password must have lowercase letters</Error>
+                    )} */}
     {/* {signup.password && (
         <PasswordStrengthBar
             password={signup.password}
