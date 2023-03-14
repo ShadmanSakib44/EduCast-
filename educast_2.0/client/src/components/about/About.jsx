@@ -39,7 +39,7 @@ const About = () => {
       <Wrapper>
         <ImageContainer>
           <img
-            src={require('/Users/shadmansakib/Downloads/MERN-Stack-Projects-master/Blog-Website/client/src/components/about/About us page-amico.svg').default}
+            src={require('./About us page-amico.svg').default}
             alt="About Us"
             style={imageStyle}
           />
