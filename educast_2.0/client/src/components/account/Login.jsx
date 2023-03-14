@@ -206,6 +206,11 @@ const Login = ({ isUserAuthenticated }) => {
           window.alert('Please fill in all fields');
           return;
         }
+
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(signup.username)){
+            window.alert('Enter a valid email');
+            return;
+        }
  
         const passwordStrength = zxcvbn(signup.password);
         if (passwordStrength.score < 3) {
