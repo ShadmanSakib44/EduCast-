@@ -18,6 +18,9 @@ import {
   singupUser,
   logoutUser,
   verifyUser,
+  forgotPassword,
+  verifyForgotPassword,
+  resetPassword,
 } from "../controller/user-controller.js";
 import {
   authenticateToken,
@@ -49,5 +52,9 @@ router.get("/comments/:id", authenticateToken, getComments);
 router.delete("/comment/delete/:id", authenticateToken, deleteComment);
 
 router.post("/verifyToken", verifyUser);
+
+router.post("/sendpasswordlink", forgotPassword);
+router.get("/forgotpassword/:id/:token", verifyForgotPassword);
+router.post("/:id/:token", resetPassword);
 
 export default router;

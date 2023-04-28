@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
+  verifytoken: {
+    type: String,
+  },
 });
 
 const user = mongoose.model("user", userSchema);

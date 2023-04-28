@@ -19,6 +19,8 @@ import Update from "./components/create/Update";
 import About from "./components/about/About";
 import Contact from "./components/contact/Contact";
 import Login from "./components/account/Login";
+import ResetPassword from "./components/reset_password/ResetPassword";
+import ForgotPassword from "./components/forgot_password/ForgotPassword";
 import EmailVerification from "./components/EmailVerification/EmailVerification";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -90,6 +92,11 @@ function App() {
             <Route
               path="/verifyEmail/:email/:token"
               element={<EmailVerification />}
+            />
+            <Route path="/password-reset" element={<ResetPassword />} />
+            <Route
+              path="/forgotpassword/:id/:token"
+              element={<ForgotPassword />}
             />
           </Routes>
         </Box>

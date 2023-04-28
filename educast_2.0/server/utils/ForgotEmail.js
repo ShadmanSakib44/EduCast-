@@ -9,13 +9,13 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-const verifyEmail = async (userEmail, token) => {
+const forgotEmail = async (userEmail, userid, token) => {
   try {
     let info = await transporter.sendMail({
       from: "educast052844@gmail.com",
       to: userEmail,
-      subject: "Verify Account",
-      html: "http://localhost:3000/verifyEmail/" + userEmail + "/" + token,
+      subject: "Reset Password",
+      html: "http://localhost:3000/forgotpassword/" + userid + "/" + token,
     });
     console.log("Email sent successfully");
   } catch (error) {
@@ -23,4 +23,4 @@ const verifyEmail = async (userEmail, token) => {
   }
 };
 
-export default verifyEmail;
+export default forgotEmail;
