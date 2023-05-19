@@ -22,6 +22,11 @@ const userSchema = mongoose.Schema({
   verifytoken: {
     type: String,
   },
+
+  tutor: {
+    type: String,
+    default: "",
+  },
 });
 
 const user = mongoose.model("user", userSchema);

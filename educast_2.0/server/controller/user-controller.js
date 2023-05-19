@@ -72,6 +72,7 @@ export const loginUser = async (request, response) => {
         refreshToken: refreshToken,
         name: user.name,
         username: user.username,
+        user,
       });
     } else {
       response.status(400).json({ msg: "Password does not match" });
@@ -82,6 +83,8 @@ export const loginUser = async (request, response) => {
 };
 
 export const logoutUser = async (request, response) => {
+  localStorage.removeItem("userItem");
+  console.log("Local Storage removed");
   const token = request.body.token;
   await Token.deleteOne({ token: token });
 
@@ -163,6 +166,8 @@ export const resetPassword = async (req, res) => {
 
   const { password } = req.body;
 
+  console.log(id);
+
   try {
     const validUser = await User.findOne({ _id: id, verifytoken: token });
 
@@ -181,6 +186,34 @@ export const resetPassword = async (req, res) => {
       console.log(setNewPassword);
 
       res.status(201).json({ status: 201, setNewPassword });
+    } else {
+      res.status(401).json({ status: 401, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+    console.log(error);
+  }
+};
+
+export const tutorRequest = async (req, res) => {
+  const id = req.params.id;
+
+  console.log(id);
+
+  try {
+    const validUser = await User.findOne({ _id: id });
+
+    if (validUser) {
+      const tutorRequest = await User.findOneAndUpdate(
+        { _id: id },
+        { tutor: "Pending" }
+      );
+
+      tutorRequest.save();
+
+      console.log(tutorRequest);
+
+      res.status(201).json({ status: 201 });
     } else {
       res.status(401).json({ status: 401, message: "User not found" });
     }

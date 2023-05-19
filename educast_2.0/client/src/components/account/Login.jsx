@@ -129,6 +129,7 @@ const Login = ({ isUserAuthenticated }) => {
           showError('');
           sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
           sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+          localStorage.setItem('userItem', JSON.stringify(response.data.user));
           setAccount({ name: response.data.name, username: response.data.username });
           isUserAuthenticated(true);
           setLogin(loginInitialValues);

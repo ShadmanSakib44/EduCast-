@@ -22,6 +22,7 @@ import Login from "./components/account/Login";
 import ResetPassword from "./components/reset_password/ResetPassword";
 import ForgotPassword from "./components/forgot_password/ForgotPassword";
 import EmailVerification from "./components/EmailVerification/EmailVerification";
+import TutorRequest from "./components/teacherRequest/tutorRequest";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   const token = sessionStorage.getItem("accessToken");
@@ -98,6 +99,7 @@ function App() {
               path="/forgotpassword/:id/:token"
               element={<ForgotPassword />}
             />
+            <Route path="/tutorRequest" element={<TutorRequest />}></Route>
           </Routes>
         </Box>
       </BrowserRouter>
