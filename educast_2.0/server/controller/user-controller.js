@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import Token from "../model/token.js";
 import User from "../model/user.js";
 import verifyEmail from "../utils/sendEmail.js";
+import forgotEmail from "../utils/ForgotEmail.js";
+import { set } from "mongoose";
 
 dotenv.config();
 
@@ -47,6 +49,9 @@ export const loginUser = async (request, response) => {
   }
 
   try {
+    if (user.verified == false) {
+      return response.status(401).json({ status: 401, msg: "Not verified" });
+    }
     let match = await bcrypt.compare(request.body.password, user.password);
     if (match) {
       const accessToken = jwt.sign(
@@ -67,6 +72,7 @@ export const loginUser = async (request, response) => {
         refreshToken: refreshToken,
         name: user.name,
         username: user.username,
+        user,
       });
     } else {
       response.status(400).json({ msg: "Password does not match" });
@@ -77,6 +83,8 @@ export const loginUser = async (request, response) => {
 };
 
 export const logoutUser = async (request, response) => {
+  localStorage.removeItem("userItem");
+  console.log("Local Storage removed");
   const token = request.body.token;
   await Token.deleteOne({ token: token });
 
@@ -85,14 +93,132 @@ export const logoutUser = async (request, response) => {
 
 export const verifyUser = async (request, response) => {
   try {
-    await User.findOneAndUpdate(
+    console.log(request.body.email);
+    const dummy = await User.findOneAndUpdate(
       { username: request.body.email },
       { $set: { verified: true } },
       { new: true }
     );
+    console.log("User", dummy);
     return response.json({ status: "okay" });
   } catch (error) {
     console.log(error);
     return response.json({ status: "error" });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    res.status(401).json({ status: 401, message: "Enter your email" });
+  }
+
+  try {
+    const userFind = await User.findOne({ username: email });
+
+    const token = jwt.sign(
+      { _id: userFind._id },
+      process.env.VERIFY_SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    const setUserToken = await User.findByIdAndUpdate(
+      { _id: userFind._id },
+      { verifytoken: token },
+      { new: true }
+    );
+
+    if (setUserToken) {
+      forgotEmail(email, userFind._id, setUserToken.verifytoken);
+      res.status(201).json({ status: 201, message: "Email sent" });
+      console.log("Email sent for reset link");
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+    console.log(error);
+  }
+};
+
+export const verifyForgotPassword = async (req, res) => {
+  const { id, token } = req.params;
+
+  try {
+    const validUser = await User.findOne({ _id: id, verifytoken: token });
+
+    const verifyToken = jwt.verify(token, process.env.VERIFY_SECRET_KEY);
+
+    if (validUser && verifyToken._id) {
+      res.status(201).json({ status: 201, validUser });
+    } else {
+      res.status(401).json({ status: 401, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+    console.log(error);
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { id, token } = req.params;
+
+  const { password } = req.body;
+
+  console.log(id);
+
+  try {
+    const validUser = await User.findOne({ _id: id, verifytoken: token });
+
+    const verifyToken = jwt.verify(token, process.env.VERIFY_SECRET_KEY);
+
+    if (validUser && verifyToken._id) {
+      const newpassword = await bcrypt.hash(password, 10);
+
+      const setNewPassword = await User.findByIdAndUpdate(
+        { _id: id },
+        { password: newpassword }
+      );
+
+      setNewPassword.save();
+
+      console.log(setNewPassword);
+
+      res.status(201).json({ status: 201, setNewPassword });
+    } else {
+      res.status(401).json({ status: 401, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+    console.log(error);
+  }
+};
+
+export const tutorRequest = async (req, res) => {
+  const id = req.params.id;
+
+  console.log(id);
+
+  try {
+    const validUser = await User.findOne({ _id: id });
+
+    if (validUser) {
+      const tutorRequest = await User.findOneAndUpdate(
+        { _id: id },
+        { tutor: "Pending" }
+      );
+
+      tutorRequest.save();
+
+      console.log(tutorRequest);
+
+      res.status(201).json({ status: 201 });
+    } else {
+      res.status(401).json({ status: 401, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+    console.log(error);
   }
 };

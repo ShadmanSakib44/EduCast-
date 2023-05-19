@@ -1,0 +1,9 @@
+body {
+    background-color: #f0f0f0; /* Replace with your desired background color */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* background-image: url('/Users/shadmansakib/Downloads/MERN-Stack-Projects-master/Blog-Website/client/src/components/image/hoho.png'); */
+    background-size: cover; /* This will make the image cover the entire body */
+  }
+  

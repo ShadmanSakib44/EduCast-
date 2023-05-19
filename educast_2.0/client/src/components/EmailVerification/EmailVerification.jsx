@@ -54,7 +54,7 @@ const EmailVerification = () => {
 
   let { email } = useParams();
   let { token } = useParams();
-  const [isValidToken, setIsValidToken] = useState(false);
+  const [isValidToken, setIsValidToken] = useState("");
 
   function verifyEmailToken(email, token) {
     const emailAndToken = {
@@ -66,7 +66,7 @@ const EmailVerification = () => {
       .then((response) => {
         const responseStatus = response.data.status;
         if (responseStatus == "okay") {
-          setIsValidToken(true);
+          setIsValidToken("set");
         }
       });
   }
@@ -83,7 +83,7 @@ const EmailVerification = () => {
           alt="Educast"
           style={{ width: "200px", height: "180px" }}
         />
-        {isValidToken ? (
+        {isValidToken == "set" ? (
           <Wrapper>
             <Text style={{ textAlign: "center", color: "black" }}>
               Email has been verified

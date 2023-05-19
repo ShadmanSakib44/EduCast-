@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
@@ -10,14 +10,6 @@ import { color } from '@mui/system';
 import eImage from '../image/ET.png';
 import zxcvbn from 'zxcvbn';
 import './index1.css';
-
-
-
-
-
-
-
-
 
 const Component = styled(Box)`
 width: 1080px;
@@ -36,59 +28,6 @@ width: 1080px;
   position: relative;
   
 `;
-// const Component = styled(Box)`
-//   width: 768px;
-//   height: 480px;
-//   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-//   background-size: cover;
-//   background-position: center;
-//   background: linear-gradient(to right, #348c26 50%, transparent 50%);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: auto;
-//   position: relative;
-// `;
-
-
-
-
-
-
-
-
-
-// const Component = styled(Box)`
-// width: 1080px;
-//  height: 720px;
-//   margin: auto;
-//   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-//   background-size: cover;
-//   background-position: center;
-//   background-color: #abd4b5;
-  
-//   margin-right: 80px; /* adjust this value to your liking */
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: auto;
-//   position: relative;
-  
-// `;
-// const Component = styled(Box)`
-//   width: 768px;
-//   height: 480px;
-//   box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-//   background-size: cover;
-//   background-position: center;
-//   background: linear-gradient(to right, #348c26 50%, transparent 50%);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: auto;
-//   position: relative;
-// `;
-
 
 const Image = styled('img')({
     width: 100,
@@ -190,11 +129,14 @@ const Login = ({ isUserAuthenticated }) => {
           showError('');
           sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
           sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+          localStorage.setItem('userItem', JSON.stringify(response.data.user));
           setAccount({ name: response.data.name, username: response.data.username });
           isUserAuthenticated(true);
           setLogin(loginInitialValues);
           window.alert('Login Successful!'); // move this line before the setTimeout function
           setTimeout(() => navigate('/'), 3000); // navigate to next page after 3 seconds
+        } else if(response.data.status == 401){
+            window.alert("Verify your email");
         } else {
           showError('Something went wrong! please try again later');
         }
@@ -254,60 +196,20 @@ const Login = ({ isUserAuthenticated }) => {
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
                             <Text style={{ textAlign: 'center', color:'black' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
+                            <p>Forgot Password? <NavLink to={"/password-reset"}>Click Here</NavLink> </p>
                         </Wrapper> :
-                        
-                      
 
-                        
-                    
-
-                        // <Wrapper>
-                        //     {/* <TextField type="text" variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' /> */}
-
-                        //     <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
-
-                        //     <TextField helperText="Please enter your user name" id="demo-helper-text-misaligned"  onChange={(e) => onInputChange(e)} name='username'  />
-                        //     {/* <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' /> */}
-                        //     { <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password"  onChange={(e) => onInputChange(e)} name='password'  /> }
-                            
-      
-                        //     <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
-                        //     <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
-                        //     <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
-                        // </Wrapper>
                         <Wrapper>
-    <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
+                            <TextField helperText="Please enter your name" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='name' />
 
-    <TextField helperText="Please enter your email" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='username' />
-                    {signup.username && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(signup.username) && (
-                        <Error>Please input valid email</Error>
-                    )}
-    <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password" onChange={(e) => onInputChange(e)} name='password' />
-                    {/* {signup.password && signup.password == "" && (
-                        <Error>Password is required</Error>
-                    )}
-                    {signup.password && signup.password.length < 8 && (
-                        <Error>Password must be 8 characters long</Error>
-                    )}
-                    {signup.password && !/\d/.test(signup.password) && (
-                        <Error>Password must have numeric digits</Error>
-                    )}
-                    {signup.password && !/[A-Z]/.test(signup.password) && (
-                        <Error>Password must have uppercase letters</Error>
-                    )}
-                    {signup.password && !/[a-z]/.test(signup.password) && (
-                        <Error>Password must have lowercase letters</Error>
-                    )} */}
-    {/* {signup.password && (
-        <PasswordStrengthBar
-            password={signup.password}
-            minLength={6}
-            shortScoreWord="Short"
-            scoreWords={['Weak', 'Fair', 'Good', 'Strong', 'Secure']}
-            thickness={300}
-        />
-    )} */}
-   {signup.password && (
+                            <TextField helperText="Please enter your email" id="demo-helper-text-misaligned" onChange={(e) => onInputChange(e)} name='username' />
+                            {signup.username && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(signup.username) && (
+                            <Error>Please input valid email</Error>
+                            )}
+
+                            <TextField helperText="Please enter your password" id="demo-helper-text-misaligned" type="password" onChange={(e) => onInputChange(e)} name='password' />
+                            
+    {signup.password && (
     <PasswordStrengthBar
         password={signup.password}
         minLength={6}
@@ -329,21 +231,13 @@ const Login = ({ isUserAuthenticated }) => {
         ]}
         barWidth={80} // change the thickness of the colors
     />
-)}
-
-
-
+    )}
 
     {error && <Error>{error}</Error>}
     <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
                             <Text style={{ textAlign: 'center',color:'black' }}>OR</Text>
                             <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
-
-    {/* <SignupButton onClick={() => signupUser()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
-    <Text>Already have an account? <Link to='/' style={{ color: '#348c26' }}>Login</Link></Text> */}
 </Wrapper>
-
-
                 }
             </Box>
         </Component>
