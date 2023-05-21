@@ -1,0 +1,26 @@
+.user-profile {
+    background: green;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  
+  .circle {
+    display: inline-block;
+    background: lightgreen;
+    color: black;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px darkgreen;
+  }
+  
